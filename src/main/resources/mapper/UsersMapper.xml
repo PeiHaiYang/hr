@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.loverblue.hr.repository.UsersMapper">
+    <insert id="addUsers" parameterType="users">
+       insert into hr.users(user_name,password,tel,email,joinTime,picPath,sex)
+       values (#{username},#{password},#{tel},#{email},#{jointime},#{picPath},#{sex})
+    </insert>
+   <update id="updateState" parameterType="map">
+       update hr.users set state = #{state}
+       <where>
+           <if test="username!=null">
+               and user_name = #{username}
+           </if>
+           <if test="tel !=null">
+               and tel = #{tel}
+           </if>
+           <if test=" email!=null">
+               and email = #{email}
+           </if>
+       </where>
+   </update>
+    <select id="userLogin" resultType="Users" parameterType="Users">
+        select user_id id, user_name username, password, tel, email, sex, joinTime, picPath,state from hr.users
+        <where>
+            <if test="username!=null">
+                and user_name = #{username}
+            </if>
+            <if test="password !=null and password!=''">
+                and password = #{password}
+            </if>
+            <if test="tel !=null">
+                and tel = #{tel}
+            </if>
+           <if test=" email!=null">
+               and email = #{email}
+           </if>
+        </where>
+    </select>
+    <select id="check" resultType="users" parameterType="map">
+        select user_name username,tel, email from hr.users
+        <where>
+            <if test="username!=null and username!=''">
+                and user_name = #{username}
+            </if>
+            <if test="tel !=null and  tel !=''">
+                and tel = #{tel}
+            </if>
+            <if test="email!=null and  email !=''">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+</mapper>

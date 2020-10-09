@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<canvas class="cavs" width="1575" height="1337"></canvas>
+
+<div class="loginmain">
+    <div class="login-title">
+        <span>用户登录</span>
+
+    </div>
+    <div class="login-con">
+        <div class="login-user">
+            <div class="icon">
+                <img src="image/cd-icon-username.png" alt="">
+            </div>
+            <input type="text" name="username" placeholder="用户名/手机号/邮箱" autocomplete="off" value="">
+        </div>
+
+        <div class="login-pwd">
+            <div class="icon">
+                <img src="image/cd-icon-password.png" alt="">
+            </div>
+            <input type="password" name="password" placeholder="密码" autocomplete="off" value="">
+        </div>
+
+
+        <div class="login-btn">
+            <input type="button" value="登录">
+        </div>
+
+
+    </div>
+    <div class="login-yan" style="opacity: 0.8;width: 180px;height: 50px; margin: 0 auto; display: none" >
+         <span class="bubble-box arrow-right">
+             <div class="wrap">提示信息</div>
+        </span>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+<script src="./js/jquery-1.10.2.js"></script>
+<script src="./js/ban.js"></script>
+
+<script src="../js/md5.js"></script>
+<script src="../js/sha1.js"></script>
+
+<script>
+    $(function () {
+        var btnval = $(".login-btn>input");
+        var time = 60;
+        var $time = null;
+
+        //验证码的倒计时
+        $time = function getTime(){
+            time--;//倒计时60秒
+            btnval.val(time + "秒后获取验证码") ;
+            if (time == 0) {
+                btnval.val("获取验证码");
+                time = 60;
+            } else {
+                setTimeout($time, 1000);//这是一个延时器，可以规定时间进行倒计时，按照毫秒数进行；递归调用；
+            }
+
+        };
+
+        /*获取用户的输入名*/
+        $(".login-user>input").on("blur",function () {
+            let $username = $(this).val();
+            let patternusername=/^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+            let pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            let patternTel=/^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+            let isNun= /^\\+?[1-9][0-9]*$/;
+            //alert($(this).val());
+
+            //如果是用户名则可以进行用户名验证的验证
+            if(patternusername.test($username)){
+              //如果是用户名要进行密码登录
+                btnval.val("登录");
+                $(".login-pwd .icon img").attr("src","image/cd-icon-password.png");
+                if($(".login-pwd>input").val()!=null && $(".login-pwd>input").val()!=''){
+                    btnval.click(function () {
+                        testSms();
+                        return false;
+                    });
+                }
+            }
+            //如果是手机号则可以进行手机号登录即可进行手机号登录
+            else if(patternTel.test($username)){
+                //手机号登录的话，可以使用手机验证码登录
+               // alert($(".login-btn>input").val());
+                if(btnval.val() =='登录'){
+                    //console.log( $(".login-btn>input"))
+                    btnval.val("获取验证码");
+                    $(".login-pwd .icon img").attr("src","image/yan.png");
+                    if (btnval.val() == '获取验证码'){
+                        btnval.click(function () {
+                            let msg = "usersTel";
+                            getCodes(msg);
+                            return false;
+                        });
+                    }
+                }
+            }
+            //首先要进行用户的用户名的判断，如果是邮箱则可以进行邮箱的验证
+            else if(pattern.test($username)){
+                btnval.val("登录");
+                $(".login-pwd .icon img").attr("src","image/yan.png");
+                if(btnval.val() =='登录'){
+                    //console.log( $(".login-btn>input"))
+                    btnval.val("获取验证码");
+                    $(".login-pwd .icon img").attr("src","image/yan.png");
+                    if (btnval.val() == '获取验证码'){
+                        btnval.click(function () {
+                            let msg = "usersEmail";
+                            getCodes(msg);
+                            return false;
+                        });
+                    }
+                }
+            }
+            else {
+                btnval.val("登录");
+            }
+
+        });
+
+       $(".login-pwd>input").keyup(function () {
+           btnval.off("click");
+       });
+
+        $(".login-pwd>input").keydown(function () {
+            btnval.off("click");
+            if (time!=60) {
+                clearTimeout($time);
+
+                $time=null;
+
+                btnval.val("登录");
+
+                time = 60;
+            }
+        });
+
+        $(".login-pwd>input").blur(function () {
+        if ($(".login-pwd>input").val()!=null && $(".login-pwd>input").val()!=''){
+                if ($(".login-pwd>input").length==6&&isNun.test($(".login-pwd>input").val())){
+                    btnval.click(function () {
+                        testSms();
+                    });
+                }else {
+                    $(".login-pwd>input").val(calcMD5(calcSHA1($(".login-pwd>input").val())));
+                    btnval.click(function () {
+                        testSms();
+                    });
+                }
+
+            }
+        });
+
+        function testSms() {
+            let val =  $("input");
+            $.ajax({
+                url: '/userLogin',
+                type: 'post',
+                dataType: 'json',
+                data:serializeObject(val),
+                success: function (results) {
+                    console.log(results);
+                    if (results.msg =="ok") {
+                        window.location.href = '../index.html';
+                    }
+                },
+                error: function(msg){
+                    if (msg == '1'){
+                        alert("手机号登录失败");
+                        return false;
+                    }
+                    else if (msg == '2') {
+                        alert("邮件验证登录失败");
+                        return false;
+                    }
+                    else{
+                        alert('您的账户密码有误请重新登录');
+                        return false;
+                    }
+
+                }
+
+        })
+        }
+
+        function getCodes(obj) {
+         $time();
+         if(time<60) {
+             $.ajax({
+                 url: '/login',
+                 type: 'get',
+                 data: $("input").serialize(),
+                 success: function () {
+                     alert("验证码已成功发送，请注意查收");
+                 },
+                 error: function(msg){
+                     if (msg == '1'){
+                         alert("手机号未注册");
+                         return false;
+                     }
+                     else if (msg == '2') {
+                         alert("邮件未注册");
+                         return false;
+                     }
+                     else{
+                         alert('您的账户可能未注册请重新注册');
+                         return false;
+                     }
+                 }
+
+             })
+         }
+
+        }
+        /*进行将字符串的类型转化为json字符串*/
+        function serializeObject(obj) {
+            var resultes = {};
+            var params = obj.serializeArray();
+            //循环数组将数组元素添加到对象里边
+            $.each(params,function (index,value) {
+                resultes[value.name] = value.value;
+            });
+            //返回一个对象
+            return resultes;
+        }
+
+    })
+</script>

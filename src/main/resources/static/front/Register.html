@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/TCaptcha.js"></script>
+    <script src="../js/md5.js"></script>
+    <script src="../js/sha1.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding:0;
+        }
+        body{
+            width: 100%;
+            height: 700px;
+            background-image: linear-gradient(to right,rgba(244,75,13,0.4),rgba(4,149,245,0.5));
+        }
+        .box{
+            width: 400px;
+            padding:40px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 24px;
+            background: #191919;
+            text-align: center;
+            opacity: 0.9;
+        }
+        .box h1{
+            color: #FFFFFF;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .box input{
+            border: 0;
+            background: none;
+            text-align: center;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #3498db;
+            color: white;
+            outline: none;
+            width: 250px;
+            padding: 14px 10px;
+            border-radius: 24px;
+            transition: 0.25s;
+        }
+        .box input:focus{
+            width: 260px;
+            border-color: green;
+        }
+        .box input[type = "submit" ]{
+            border: 0;
+            background: none;
+            text-align: center;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #2ecc71;
+            color: white;
+            outline: none;
+            padding: 14px 40px;
+            border-radius: 24px;
+            transition: 0.25s;
+        }
+        .box input[type = "button" ]:hover{
+            background: #2ecc71;
+        }
+        .box span{
+            font-size: 10px;
+            color: rgba(143134,134,0.61);
+        }
+        #textCode{
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            border: 1px solid red;
+
+        }
+    </style>
+
+</head>
+<body>
+
+<form action="/register" method="post" class="box" id="myForm" onsubmit="return Check.checkReg()">
+
+    <h1>用户注册界面</h1>
+    <input type="text" name="username" id="username" value="" placeholder="username" onblur="Check.checkUser()"/>
+    <span id="usernameInfo">请输入用户名</span>
+
+    <input type="password" name="password" id="password" value="" placeholder="password" onblur="Check.checkPsw()"/>
+    <span id="passwordInfo" >密码以字母开头</span>
+
+    <span id="textCode" name="textCode">弱</span><span id="textCode" name="textCode">中</span>  <span id="textCode" name="textCode">强</span>
+    <input type="text" name="tel" id="tel" value="" placeholder="tel" onblur="Check.checkTel()"/>
+    <span id="telInfo">请输入手机号</span>
+
+    <input type="text" name="email" id="email" value="" placeholder="email" onblur="Check.checkEmail()" />
+    <span id="emailInfo">请输入邮箱</span>
+
+    <input type="text" name="sex" value="男" style="display: none"/>
+    <input type="text" name="jointime" id="joinTime" style="display: none" />
+    <input type="text" name="picPath" value="C://img/boy.jpg" style="display: none" />
+    <input type="button" value="submit" id="btn"/>
+
+</form>
+</body>
+
+<script type="text/javascript">
+
+        //获取用户名
+        var username=document.getElementById("username");
+        //登录密码
+        var password=document.getElementById("password");
+        //手机号
+        var tel=document.getElementById("tel");
+        //邮箱
+        var email = document.getElementById("email");
+        //提示消息：
+        var usernameInfo = document.getElementById("usernameInfo");
+
+        var passwordInfo = document.getElementById("passwordInfo");
+
+        var telInfo = document.getElementById("telInfo");
+
+        var emailInfo = document.getElementById("emailInfo");
+
+        var textCode = document.getElementsByName("textCode");
+
+        var btn = document.getElementById("btn");
+
+        var joinTime = document.getElementById("joinTime");
+
+        //声明一个对象将检测方法写到里边
+        var Check;
+        Check = {
+            //用户检测
+            checkUser: function () {
+                //用户名不能为空或者是小于6个字符
+                let pattern = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/
+                if (username.value.length == 0) {
+                    usernameInfo.innerHTML = '用户名不可以为空';
+                    usernameInfo.style.color = "red";
+                    return false;
+                }
+                if (!pattern.test(username.value)) {
+                    usernameInfo.innerHTML = '用户名不合法';
+                    usernameInfo.style.color = "red";
+                    return false;
+                } else {
+                    usernameInfo.innerHTML = 'ok';
+                    usernameInfo.style.color = "green";
+                    return true;
+                }
+            },
+            //监测密码
+            checkPsw: function () {
+                let pattern = /^[a-zA-Z]\w{5,17}$/;
+                if (password.value.length == 0) {
+                    passwordInfo.innerHTML = '密码不可以为空';
+                    passwordInfo.style.color = "red";
+                    return false;
+                }
+                if (!pattern.test(password.value)) {
+                    passwordInfo.innerHTML = '密码要以字母开头';
+                    passwordInfo.style.color = "red";
+
+                    return false;
+                } else {
+                    passwordInfo.innerHTML = 'ok';
+                    passwordInfo.style.color = "green";
+                    return true;
+                }
+            },
+            //检测手机号
+            checkTel: function () {
+                let pattern = /^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+                if (tel.value.length == 0) {
+                    telInfo.innerHTML = '手机号不可以为空';
+                    telInfo.style.color = "red";
+                    return false;
+                }
+                if (!pattern.test(tel.value)) {
+                    telInfo.innerHTML = '手机号不合法';
+                    telInfo.style.color = "red";
+                    return false;
+                } else {
+                    telInfo.innerHTML = 'ok';
+                    telInfo.style.color = "green";
+                    return true;
+                }
+            },
+            //检测邮箱
+            checkEmail: function () {
+                let pattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                if (email.value.length == 0) {
+                    emailInfo.innerHTML = '邮箱不可以为空';
+                    emailInfo.style.color = "red";
+                    return false;
+                }
+                if (!pattern.test(email.value)) {
+                    emailInfo.innerHTML = '邮箱不合法';
+                    emailInfo.style.color = "red";
+                    return false;
+                } else {
+                    emailInfo.innerHTML = 'ok';
+                    emailInfo.style.color = "green";
+                    return true;
+                }
+            },
+            checkReg: function () {
+                let userReg = this.checkUser();
+                let pswReg = this.checkPsw();
+                let telReg = this.checkTel();
+                let emailReg = this.checkEmail();
+                return userReg && pswReg && telReg && emailReg;
+
+            }
+
+        };
+        password.onkeyup=function(){
+            var pswvalue = this.value;
+            for (var i = 0; i < textCode.length; i++) {
+
+                textCode[i].style.background = '';
+
+            }
+            if(pswvalue.length>=6){
+                /* 如果是全数字的情况下 如果是全是字母 纯小写 纯大写的情况下  弱*/
+                if (/^\d+$/.test(pswvalue)||/^[a-z]+$/.test(pswvalue)||/^[A-Z]+$/.test(pswvalue)) {
+                    textCode[0].style.display = 'inline-block';
+                    textCode[0].style.background='green';
+                    return false;
+                }else if(/\d/.test(pswvalue) && /[a-z]/.test(pswvalue)&&/[A-Z]/.test(pswvalue)){
+                    /* 三种都有 强 */
+                    textCode[2].style.display = 'inline-block';
+                    textCode[2].style.background='green';
+                    return false;
+                }
+                else{
+                    /* 数字和字母二者混合使用  中*/
+                    textCode[1].style.display = 'inline-block';
+                    textCode[1].style.background='green';
+                    return false;
+                }
+            }
+        };
+        btn.onclick = function () {
+                var captcha1 = new TencentCaptcha('2019760731', function(res) {
+                    if(res.ret === 0){
+                        // alert(res.ticket)   票据
+                        var myFrom = document.getElementById("myForm");
+                        password.value = calcMD5(calcSHA1(password.value));
+                        joinTime.value = formartDate();
+                        alert(joinTime.value)
+                        myFrom.submit();
+                    }
+                });
+                captcha1.show();
+                return false;
+            };
+        function formartDate() {
+            var date = new Date();
+            // 2018-4-3 21:30:23
+            var arr = [date.getFullYear() + "-",
+                date.getMonth() + 1 + "-",
+                date.getDate()];
+            return arr.join("");
+
+        };
+</script>
+</html>
