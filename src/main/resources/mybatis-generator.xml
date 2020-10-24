@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+
+        </commentGenerator>
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/loverblue" userId="root" password="1">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="cn.loverblue.hr.bean" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="exampleTargetPackage" value="cn.loverblue.hr.bean"/>
+        </javaModelGenerator>
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="cn.loverblue.hr.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成Dao类存放位置-->
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <javaClientGenerator type="MIXEDMAPPER" targetPackage="cn.loverblue.hr.repository" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!--生成对应表及类名-->
+        <table tableName="users" domainObjectName="Users" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+
+        </table>
+
+        <table tableName="power" domainObjectName="Power" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="menu" domainObjectName="Menu" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="address" domainObjectName="Address" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="shoppingcar" domainObjectName="ShoppingCar" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="orders" domainObjectName="Orders" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="category" domainObjectName="Category" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="commodity" domainObjectName="Commodity" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="details" domainObjectName="Details" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+
+        <table tableName="num" domainObjectName="Num" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+                             enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+        <property name="useCompoundPropertyNames" value="true"></property>
+        <property name="useActualColumnNames" value="true"></property>
+       </table>
+        <table tableName="tag" domainObjectName="Tag" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+        <table tableName="commodity_tag" domainObjectName="Commodity_Tag" enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useCompoundPropertyNames" value="true"></property>
+            <property name="useActualColumnNames" value="true"></property>
+        </table>
+    </context>
+</generatorConfiguration>

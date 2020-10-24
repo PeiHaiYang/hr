@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title></title>
     <script src="../js/jquery-1.12.4.js"></script>
-    <script src="../js/TCaptcha.js"></script>
+
     <script src="../js/md5.js"></script>
     <script src="../js/sha1.js"></script>
     <style type="text/css">
@@ -65,7 +65,7 @@
             border-radius: 24px;
             transition: 0.25s;
         }
-        .box input[type = "button" ]:hover{
+        .box input[type = "submit" ]:hover{
             background: #2ecc71;
         }
         .box span{
@@ -84,10 +84,10 @@
 </head>
 <body>
 
-<form action="/register" method="post" class="box" id="myForm" onsubmit="return Check.checkReg()">
+<form action="/register1" method="get" class="box" onsubmit="return Check.checkReg()">
 
     <h1>用户注册界面</h1>
-    <input type="text" name="username" id="username" value="" placeholder="username" onblur="Check.checkUser()"/>
+    <input type="text" name="user_name" id="username" value="" placeholder="username" onblur="Check.checkUser()"/>
     <span id="usernameInfo">请输入用户名</span>
 
     <input type="password" name="password" id="password" value="" placeholder="password" onblur="Check.checkPsw()"/>
@@ -101,9 +101,9 @@
     <span id="emailInfo">请输入邮箱</span>
 
     <input type="text" name="sex" value="男" style="display: none"/>
-    <input type="text" name="jointime" id="joinTime" style="display: none" />
-    <input type="text" name="picPath" value="C://img/boy.jpg" style="display: none" />
-    <input type="button" value="submit" id="btn"/>
+    <input type="text" name="joinTime" id="joinTime" style="display: none" />
+    <input type="text" name="picPath" value="http://www.loverblue.cn:8080/test.jpg" style="display: none" />
+    <input type="submit" value="submit" id="btn"/>
 
 </form>
 </body>
@@ -129,8 +129,6 @@
 
         var textCode = document.getElementsByName("textCode");
 
-        var btn = document.getElementById("btn");
-
         var joinTime = document.getElementById("joinTime");
 
         //声明一个对象将检测方法写到里边
@@ -150,8 +148,23 @@
                     usernameInfo.style.color = "red";
                     return false;
                 } else {
-                    usernameInfo.innerHTML = 'ok';
-                    usernameInfo.style.color = "green";
+                    $.ajax({
+                        url: '/checkUsername',
+                        type: 'get',
+                        data:  "user_name="+username.value,
+                        success: function (map) {
+                            console.log(map);
+                            if (map.msg =="ok") {
+                                usernameInfo.innerHTML = 'ok';
+                                usernameInfo.style.color = "green";
+                                return true;
+                            }else{
+                                usernameInfo.innerHTML = map.msg;
+                                usernameInfo.style.color = "red";
+                                return false;
+                            }
+                        }
+                    });
                     return true;
                 }
             },
@@ -171,8 +184,11 @@
                 } else {
                     passwordInfo.innerHTML = 'ok';
                     passwordInfo.style.color = "green";
+                    password.value = calcSHA1(calcMD5(password.value));
                     return true;
                 }
+                console.log(ok)
+
             },
             //检测手机号
             checkTel: function () {
@@ -185,11 +201,29 @@
                 if (!pattern.test(tel.value)) {
                     telInfo.innerHTML = '手机号不合法';
                     telInfo.style.color = "red";
+
                     return false;
                 } else {
-                    telInfo.innerHTML = 'ok';
-                    telInfo.style.color = "green";
+                    $.ajax({
+                        url: '/checkTel',
+                        type: 'get',
+                        data:  "tel="+tel.value,
+                        success: function (map) {
+                            console.log(map);
+                            if (map.msg =="ok") {
+                                telInfo.innerHTML = 'ok';
+                                telInfo.style.color = "green";
+                                return true;
+                            }else{
+                                telInfo.innerHTML = map.msg;
+                                telInfo.style.color = "red";
+                                return false;
+                            }
+                        }
+                    })
+                    console.log('ok');
                     return true;
+
                 }
             },
             //检测邮箱
@@ -205,17 +239,45 @@
                     emailInfo.style.color = "red";
                     return false;
                 } else {
-                    emailInfo.innerHTML = 'ok';
-                    emailInfo.style.color = "green";
+                    $.ajax({
+                        url: '/checkEmail',
+                        type: 'get',
+                        data:  "email="+email.value,
+                        success: function (map) {
+                            console.log(map);
+                            if (map.msg =="ok") {
+
+                                emailInfo.innerHTML = 'ok';
+
+                                emailInfo.style.color = "green";
+
+                                joinTime.value = formartDate();
+
+                                return true;
+                            }else{
+                                emailInfo.innerHTML = map.msg;
+                                emailInfo.style.color = "red";
+                                return false;
+                            }
+                        }
+                    });
+                    console.log('ok');
                     return true;
                 }
             },
             checkReg: function () {
-                let userReg = this.checkUser();
-                let pswReg = this.checkPsw();
-                let telReg = this.checkTel();
-                let emailReg = this.checkEmail();
-                return userReg && pswReg && telReg && emailReg;
+
+                    let userReg = this.checkUser();
+
+                    let telReg = this.checkTel();
+
+                    let emailReg = this.checkEmail();
+
+                    console.log(userReg);
+                    console.log(telReg);
+                    console.log(emailReg);
+
+                    return userReg && telReg && emailReg;
 
             }
 
@@ -247,20 +309,7 @@
                 }
             }
         };
-        btn.onclick = function () {
-                var captcha1 = new TencentCaptcha('2019760731', function(res) {
-                    if(res.ret === 0){
-                        // alert(res.ticket)   票据
-                        var myFrom = document.getElementById("myForm");
-                        password.value = calcMD5(calcSHA1(password.value));
-                        joinTime.value = formartDate();
-                        alert(joinTime.value)
-                        myFrom.submit();
-                    }
-                });
-                captcha1.show();
-                return false;
-            };
+
         function formartDate() {
             var date = new Date();
             // 2018-4-3 21:30:23

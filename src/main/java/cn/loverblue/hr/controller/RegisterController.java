@@ -4,7 +4,7 @@ import cn.loverblue.hr.bean.Users;
 import cn.loverblue.hr.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,55 +25,66 @@ public class RegisterController {
     @Resource
     UsersService usersService;
 
-    @RequestMapping("/register")
+    @RequestMapping("/register1")
     public void addUsers(Users users, HttpServletResponse response){
 
         if(usersService.addUsers(users)==1){
             try {
-                logger.info("用户注册成功"+users.getUsername());
-                response.sendRedirect("./front/login.html");
+                logger.info("用户注册成功"+users.getUser_name());
+                System.out.println(123);
+                response.sendRedirect("front/login.html");
 
             } catch (IOException e) {
-                logger.error("用户注册失败"+users.getUsername());
+                logger.error("用户注册失败"+users.getUser_name());
                 e.printStackTrace();
 
             }
+        }else {
+            logger.error("用户注册失败"+users.getUser_name());
+            System.out.println("注册失败");
         }
 
     }
+
     @RequestMapping("/checkUsername")
-    public Map checkUsername(@PathVariable String username){
-        Users users = usersService.checkUsername(username);
+    public  Map<String, String> checkUsername(String user_name){
+        logger.info(user_name);
+        Users users = usersService.checkUsername(user_name);
         Map<String, String> map = new HashMap<>();
-        if (users.getUsername()==null){
+        if (users!=null){
+            map.put("msg","用户名已经被注册了");
+        }else {
             map.put("msg","ok");
             return map;
         }
-        map.put("msg","用户名已经被注册了");
-        return null;
+        return map;
     }
     @RequestMapping("/checkTel")
-    public Map checkTel(@PathVariable String tel){
-        Users users = usersService.checkUsername(tel);
+    public  Map<String, String> checkTel(String tel){
+        Users users = usersService.checkTel(tel);
         Map<String, String> map = new HashMap<>();
-        if (users.getTel()==null){
+        if (users!=null){
+            map.put("msg","手机号已经被注册了");
+        }else {
             map.put("msg","ok");
             return map;
         }
-        map.put("msg","手机号已经被注册了");
         return map;
     }
     @RequestMapping("/checkEmail")
-    public Map checkEmail(@PathVariable String email){
-        Users users = usersService.checkUsername(email);
+    public  Map<String, String> checkEmail(String email){
+        Users users = usersService.checkEmail(email);
         Map<String, String> map = new HashMap<>();
-        if (users.getEmail()==null){
+        if (users!=null){
+            map.put("msg","邮箱已经被注册了");
+        }else {
             map.put("msg","ok");
             return map;
         }
-        map.put("msg","邮箱已经被注册了");
         return map;
     }
+
+
 
 
 }

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scrollbar">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loverblue 购物车</title>
+    <link rel="stylesheet" href="css/shopcart.css">
+    <style>
+[v-cloak] {
+	visibility: hidden;
+}
+</style>
+        <!--引用主页-->
+        <!--====== Bootstrap css ======-->
+        <link rel="stylesheet" href="front/assets/css/bootstrap.min.css">
+
+        <!--====== Pe Icon 7 Stroke css ======-->
+        <link rel="stylesheet" href="front/assets/css/Pe-icon-7-stroke.css">
+
+        <!--====== Ion Icons css ======-->
+        <link rel="stylesheet" href="front/assets/css/ionicons.min.css">
+
+        <!--====== Magnific Popup css ======-->
+        <link rel="stylesheet" href="front/assets/css/magnific-popup.css">
+
+        <!--====== Slick css ======-->
+        <link rel="stylesheet" href="front/assets/css/slick.css">
+
+        <!--====== Animate css ======-->
+        <link rel="stylesheet" href="front/assets/css/animate.min.css">
+
+        <!--====== Nice Select css ======-->
+        <link rel="stylesheet" href="front/assets/css/nice-select.css">
+
+        <!--====== Default css ======-->
+        <link rel="stylesheet" href="front/assets/css/default.css">
+
+        <!--====== Style css ======-->
+        <link rel="stylesheet" href="front/assets/css/style.css">
+    </head>
+
+    <body style="background-color: rgb(235,124,1)">
+    <!--======页面加载初的动画效果 ======-->
+
+    <div id="preloader">
+        <div id="loader">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!--====== PRELOADER  PART ENDS ======-->
+    <!--====== HEADER  PART START ======-->
+
+    <header class="header-area">
+        <div class="navigation fixed-top">
+            <div class="container-fluid pl-60 pr-60">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand" href="index.html">
+                                <img src="front/assets/images/logs.png" style="width: 16vw;height: 5vw;" alt="Logo">
+                            </a>  <!--Logo-->
+
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button> <!-- navbar-toggler -->
+
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul class="navbar-nav m-auto">
+                                    <li class="nav-item active">
+                                        <a class="page-scroll" href="#home">主页</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#service">产品</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="front/product-list.html">更多产品</a></li>
+                                        </ul> <!-- sub menu -->
+                                    </li>
+                                </ul>
+                            </div> <!-- navbar collapse -->
+                        </nav> <!-- navbar -->
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- navigation -->
+    </header>
+
+    <!--====== HEADER  PART ENDS ======-->
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+<h1 id="site-headline">Vue仿魅族购物车结算</h1>
+<main id="shopcart" v-cloak>
+      <div class="shopcart-body" v-if='isShow'>
+    <section class="cart-main">
+          <header class="head">
+        <nav class="cart-nav flex-vc">
+              <div class="check-all row-5">
+            <div class="check-wrapper"> <a href="javascript:;" class="check-ctrl" :class={checked:isSelectedAll}
+                                    @click='checkAll'> <i class="icon-check"> <span></span> </i> <span class="name-check">全选</span> </a> </div>
+          </div>
+              <div class="singal-price row-2"> 单价（元） </div>
+              <div class="number row-2"> 数量 </div>
+              <div class="small-total row-2"> 小计（元） </div>
+              <div class="edit row-1" @click='toggleEdit'> <span v-text='isEdit ? "编辑" : "完成"'></span> </div>
+            </nav>
+      </header>
+          <section class="body">
+        <div class="area" v-for="(kind , i) of goodsInfo" :key="kind.key">
+              <div class="area-category">
+            <div class="check-wrapper"> <a href="javascript:;" class="check-ctrl" :class={checked:kind.isSelected}
+                                    @click='checkCategory(kind)'> <i class="icon-check"> <span></span> </i> <span class="name-check">{{kind.category}}</span> </a> </div>
+          </div>
+              <ul class="area-list">
+            <li class="item flex-wrap" v-for="(item , index) of kind.goods" :key="item.name">
+                  <div class="option flex-vc row-5">
+                <div class="check-wrapper"> <a href="javascript:;" class="check-ctrl" :class={checked:item.isSelected}
+                                            @click='checkSingal(kind ,item)'> <i class="icon-check"> <span></span> </i> </a> </div>
+                <div class="img"> <a href="javascript:;"> <img :src=item.imgUrl alt=""> </a> </div>
+                <div class="good-info"> <a href="javascript:;">
+                  <h5 class="good-name">{{item.name}}</h5>
+                  <p class="good-desc">{{item.tips}}</p>
+                  </a> </div>
+              </div>
+                  <div class="singal-price row-2 flex-hvc"> {{item.price | polish }} </div>
+                  <div class="number row-2 flex-hvc">
+                <div class="flex-wrap input-box">
+                      <button class="minus" :class="{'forbid':item.isBanMinus}"
+                                            @click="minus(item)">-</button>
+                      <input class="num-input" type="text" :value=item.selectNum
+                                            @keyup="inputVerify(item,$event)">
+                      <button class="plus" :class="{'forbid':item.isBanPlus}"
+                                            @click="plus(item)">+</button>
+                      <em class="upper-limit">限购<span>{{item.upperLimit}}</span>件</em> </div>
+              </div>
+                  <div class="small-total row-2 flex-hvc"> {{item.price * item.selectNum | polish()}} </div>
+                  <div class="edit row-1 flex-hvc"> <i class="edit-icon" v-show="isEdit">--</i> <i class="close-btn" v-show="!isEdit" @click="alertDelConfirm(kind,index)"> <span class="shift-left"></span> <span class="shift-right"></span> </i> </div>
+                </li>
+          </ul>
+            </div>
+      </section>
+        </section>
+    <footer class="cart-foot-wrap">
+          <div class="foot flex-vc">
+        <div class="foot-left flex-vc">
+              <div class="check-wrapper"> <a href="javascript:;" class="check-ctrl" :class={checked:isSelectedAll} @click='checkAll'> <i class="icon-check"> <span></span> </i> <span class="name-check">全选</span> </a> </div>
+              <div class="desc"> <span class="del-selected" @click="alertDelConfirm">删除选中商品</span> <em class="num-desc"> 共有 <span class="sum"> {{sum}} </span> 件商品，已选择 <span class="sumed"> {{sumed}} </span> 件 </em> </div>
+            </div>
+        <div class="foot-right flex-vc">
+              <div class="total-price"> 合计： <span class="totaled"> {{totaled | polish}} </span> </div>
+              <a href="javascript:;" class="order flex-hvc" :class='{"none-order":isNoOrder}'> 去结算 </a> </div>
+      </div>
+        </footer>
+    <del-confirm ref="delConfirm" @del-goods="deleteOk"></del-confirm>
+  </div>
+      <div class="shopcart-null flex-hvc" v-else> <i class="shopcart-icon"></i>
+    <div class="tips">
+          <h3 class="tips-substitle"> 购物车内还没有商品，赶紧去选购吧~~ </h3>
+          <a href="javascript:;" class="back-home flex-hvc"> 返回商城首页 </a> </div>
+  </div>
+    </main>
+<template id="del-confirm">
+      <div>
+    <aside class="mask-layer" :class='{"show":isAlert}'>
+          <section class="confirm-box">
+        <h3 class="confirm-title flex-hvc"> <span>{{confirmInfo.title}}</span> <i class="close-btn" @click="closeDelConfirm"> <span class="shift-left"></span> <span class="shift-right"></span> </i> </h3>
+        <p class="confirm-con flex-hvc"> {{confirmInfo.content}} </p>
+        <div class="confirm-ctrl flex-hc"> <a href="javascript:;" class="delete" :class='{"show":confirmInfo.del.isShow}'
+                            @click="delSure">{{confirmInfo.del.delCon}}</a> <a href="javascript:;" class="cancel" @click='closeDelConfirm'>{{confirmInfo.cancelCon}}</a> </div>
+      </section>
+        </aside>
+  </div>
+    </template>
+    <!--====== INSTAGRAM PART START ======-->
+
+    <div class="instagram-area" style="margin-top: 5vw">
+        <div class="container-fluid pl-60 pr-60">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="instagram-item d-flex">
+                        <div class="single-instagram">
+                            <img src="front/assets/images/instagram-1.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                        <div class="single-instagram">
+                            <img src="front/assets/images/instagram-2.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                        <div class="single-instagram">
+                            <img src="front/assets/images/instagram-3.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                        <div class="single-instagram d-none d-sm-inline-block">
+                            <img src="front/assets/images/instagram-4.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                        <div class="single-instagram d-none d-md-inline-block">
+                            <img src="front/assets/images/instagram-5.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                        <div class="single-instagram d-none d-md-inline-block">
+                            <img src="front/assets/images/instagram-6.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                        <div class="single-instagram d-none d-lg-inline-block">
+                            <img src="front/assets/images/instagram-7.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                        <div class="single-instagram d-none d-lg-inline-block">
+                            <img src="front/assets/images/instagram-8.jpg" alt="instagram">
+                            <div class="instagram-overlay">
+                                <a href="#"><i class="ion ion-logo-instagram"></i></a>
+                            </div>
+                        </div> <!-- single instagram -->
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container fluid -->
+        <span>loveblue 六六六生鲜摊</span>
+    </div>
+
+    <!--====== INSTAGRAM PART ENDS ======-->
+<!--====== FOOTER PART START ======-->
+
+<section class="footer-area gray-bg pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="footer-item-1 mt-30">
+                    <a href="index.html"><img src="front/assets/images/logs.png" style="width: 16vw;height: 5vw;" alt="Logo"></a>
+                    <span>Copyright @2019 <span>loverblue</span></span>
+                    <ul>
+                        <li><a href="#">质量监督</a></li>
+                        <li><a href="#">消费者保护 </a></li>
+                        <li><a href="#">关于我们</a></li>
+                    </ul>
+                    <div class="footer-info">
+                        <ul>
+                            <li><i class="ion ion-md-pin"></i> 中国区 <br>河北省唐山市 </li>
+                            <li><i class="ion ion-ios-mail"></i>电子邮箱:u02@loverblue.cn</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-2 col-md-2 col-sm-4">
+                <div class="footer-social mt-30">
+                    <h5 class="title">联系我们</h5>
+                    <ul>
+                        <li><a href="https://www.facebook.com/info.tanver">Facebook</a></li>
+                        <li><a href="#">QQ 147325197</a></li>
+                        <li><a href="#">微信：同号</a></li>
+                        <li><a href="skype:live:taherul.islam_1">Email:u02@loverblue.cn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-8">
+                <div class="footer-item-2 mt-30">
+                    <h5 class="title">电子邮箱</h5>
+                    <form action="#">
+                        <div class="input-box mt-25">
+                            <input type="text" placeholder="您的建议">
+                        </div>
+                        <!-- <div class="input-box mt-25">
+                             <input type="email" placeholder="您的邮箱">
+                         </div>-->
+                        <div class="input-box mt-25">
+                            <button class="main-btn">提交 <i class="ion ion-ios-send"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--====== FOOTER PART ENDS ======-->
+<!--<script src="https://www.jq22.com/jquery/vue.min.js"></script>-->
+    <!--====== axios.min.js ======-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script src="js/shopcart.js"></script>
+    <!--引用主页的-->
+<!--====== jquery js ======-->
+<script src="front/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+<script src="front/assets/js/vendor/jquery-1.12.4.min.js"></script>
+
+<!--====== Bootstrap js ======-->
+<script src="front/assets/js/bootstrap.min.js"></script>
+<script src="front/assets/js/popper.min.js"></script>
+
+<!--====== Slick js ======-->
+<script src="front/assets/js/slick.min.js"></script>
+
+<!--====== Isotope js ======-->
+<script src="front/assets/js/isotope.pkgd.min.js"></script>
+
+<!--====== Images Loaded js ======-->
+<script src="front/assets/js/imagesloaded.pkgd.min.js"></script>
+
+<!--====== Magnific Popup js ======-->
+<script src="front/assets/js/jquery.magnific-popup.min.js"></script>
+
+<!--====== Nice Select js ======-->
+<script src="front/assets/js/jquery.nice-select.min.js"></script>
+
+<!--====== Main js ======-->
+<script src="front/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--====== Title ======-->
+    <title>Loverblue</title>
+
+    <!--====== Favicon Icon ======-->
+
+
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/bootstrap.min.css}" href="front/assets/css/bootstrap.min.css">
+
+    <!--====== Pe Icon 7 Stroke css ======-->
+    <link rel="stylesheet"  th:href="@{/front/assets/css/Pe-icon-7-stroke.css}" href="front/assets/css/Pe-icon-7-stroke.css">
+
+    <!--====== Ion Icons css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/ionicons.min.css}" href="front/assets/css/ionicons.min.css">
+
+    <!--====== Magnific Popup css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/magnific-popup.css}" href="front/assets/css/magnific-popup.css">
+
+    <!--====== Slick css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/slick.css}" href="front/assets/css/slick.css">
+
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/animate.min.css}" href="front/assets/css/animate.min.css">
+
+    <!--====== Nice Select css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/nice-select.css}" href="front/assets/css/nice-select.css">
+
+    <!--====== Default css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/default.css}" href="front/assets/css/default.css">
+
+    <!--====== 分页插件的 css ======
+    <link rel="stylesheet" href="front/css/pagination.css">
+    -->
+    <!--====== Style css ======-->
+    <link rel="stylesheet" th:href="@{/front/assets/css/style.css}" href="front/assets/css/style.css">
+
+</head>
+
+<body>
+
+<!--====== PRELOADER  PART START ======-->
+
+<div id="preloader">
+    <div id="loader">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!--====== PRELOADER  PART ENDS ======-->
+
+<!--====== 搜索框 ======-->
+
+<div class="search-box">
+    <div class="search-header">
+        <div class="container mt-60">
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="search-title">查找您需要的水果</h5> <!-- search title -->
+                </div>
+                <div class="col-6">
+                    <div class="search-close text-right">
+                        <button class="search-close-btn">关闭 <span></span><span></span></button>
+                    </div> <!-- search close -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div> <!-- search header -->
+    <div class="search-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="search-form">
+                        <form action="#">
+                            <input type="text" name="searchVal" placeholder="水果名字">
+                            <button><i class="flaticon-search"></i></button>
+                            <button id="search-btn">
+                                搜索
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div> <!-- search body -->
+</div>
+
+<!--====== SEARCH PART ENDS ======-->
+<!--====== SHOPPING CART PART START ======-->
+
+<div class="shopping-cart-wrapper">
+    <div class="shopping-cart-canvas">
+        <div class="shopping_cart">
+            <div class="shopping_cart-top-bar d-flex justify-content-between">
+                <h6>我的订单</h6>
+                <button class="shopping-cart-close">
+                    <i class="ion ion-md-add"></i>
+                </button>
+            </div><!-- shopping cart top bar -->
+            <div class="row" style="margin-top: 1vw">
+                <div class="col-md-9"><h5>订单号：</h5></div>
+                <div class="col-md-3">已完成</div>
+            </div><!--order list id -->
+            <div class="shopping_cart-list-items mt-30">
+                <ul>
+                    <li>
+                        <div class="single-shopping-cart media">
+                            <div class="cart-image">
+                                <img src="front/assets/images/cart-1.jpg" alt="Cart">
+                            </div>
+                            <div class="cart-content media-body pl-15">
+                                <h6><a href="#">香蕉啊啊啊啊啊</a></h6>
+                                <span class="quality">QTY: 01</span>
+                                <span class="price">$205.00</span>
+                                <a class="remove" href="#"><i class="fal fa-times"></i></a>
+                            </div>
+                            <button class="btn btn-default btn-sm" type="submit" style="border-color: grey">立即评价</button>
+                        </div> <!-- single shopping cart -->
+                    </li>
+                </ul>
+            </div> <!-- shopping_cart list items -->
+            <!-- <div class="shopping_cart-btn">
+                 <div class="total pt-35 d-flex justify-content-between">
+                     <h5>总计额:</h5>
+                     <p>$240.00</p>
+                 </div>
+                 <div class="cart-btn pt-25">
+                     <a class="main-btn" href="#"></a>
+                 </div>
+             </div>-->
+        </div> <!-- shopping_cart -->
+    </div>
+    <div class="overlay"></div>
+</div>
+
+<!--====== SHOPPING CART PART ENDS ======-->
+<!--====== HEADER  PART START ======-->
+<header class="header-area">
+    <div class="navigation navigation-2 navigation-page fixed-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="front/assets/images/logs.png" th:src="@{/front/assets/images/logs.png}" style="width: 16vw;height: 5vw;" alt="Logo">
+                        </a> <!-- Logo -->
+
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button> <!-- navbar-toggler -->
+
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="page-scroll" href="#home">生鲜类别</a>
+                                    <ul class="sub-menu">
+                                        <li th:each="item : ${imgnameandpath}">
+                                            <a th:href="@{/selectBySort(category_id=${item.getSortid()})}">[[${item.getSortname()}]]</a>
+                                        </li>
+                                        <li><a th:href="@{/selectall}">所有生鲜</a></li>
+                                    </ul> <!-- sub menu -->
+                                </li>
+                                <li class="nav-item"><a class="page-scroll" href="">购物车</a></li>
+                                <li class="nav-item active">
+                                    <a class="page-scroll" href="#service">主页</a>
+                                </li>
+                            </ul>
+                        </div> <!-- navbar collapse -->
+                        <div class="navbar-icon d-none d-sm-block">
+                            <ul>
+                                <li><a class="search-open" href="#"><i class="pe-7s-search"></i></a></li>
+                                <li><a class="shopping-cart-open" href="#">
+                                    <svg width="1em" height="2em" viewBox="0 0 16 16" class="bi bi-card-checklist" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                        <path fill-rule="evenodd" d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </a></li>
+                            </ul>
+                        </div>
+                    </nav> <!-- navbar -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div> <!-- navigation -->
+</header>
+
+<!--====== HEADER  PART ENDS ======-->
+
+<!--====== PAGE TITLE  PART START ======-->
+
+<section class="page-title-area d-flex align-items-center bg_cover" style="background-image: url(/front/assets/images/page-title-bg.jpg)" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-item text-center">
+                    <h3 class="title">商品展示</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">类别</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">商品列表</li>
+                        </ol>
+                    </nav>
+                </div> <!-- page title item -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- row -->
+    <div class="page-title-shape">
+        <img src="front/assets/images/banner-shape.png"  th:src="@{/front/assets/images/banner-shape.png}" alt="shape">
+    </div> <!-- page title shape -->
+</section>
+
+<!--====== PAGE TITLE  PART ENDS ======-->
+
+<!--====== PRODUCT  PART START ======-->
+
+<section class="product-area product-area-2">
+    <div class="container">
+        <div class="row align-items-center pt-65 pb-20">
+            <div class="col-lg-3 col-md-4">
+                <div class="product-grid-tab d-flex">
+                    <span>[[${commodities.total}]] products </span>
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="ion ion-ios-list"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="ion ion-ios-keypad"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="product-grid-select float-left float-md-right">
+                    <ul>
+                        <li>
+                            <select id="orderbyPrice">
+                                <option value="1">按价格</option>
+                                <option value="2">价格由高到低</option>
+                                <option value="3">价格由低到高</option>
+                            </select>
+                        </li>
+                        <li>
+                            <select id="orderByBrand">
+                                <option value="1">按品牌</option>
+                                <option value="2">corore</option>
+                                <option value="3">HSHTAG</option>
+                                <option value="4">moment</option>
+                                <option value="3">VINTAGE</option>
+                                <option value="4">GEVA</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row justify-content-center" th:each="item : ${commodities.list}">
+                    <div class="col-lg-3 col-md-4 col-sm-9">
+                        <div class="product-list-thumb mt-30">
+                            <a th:href="@{/commoditydetail(id=${item.getId()})}">
+                            <img th:src="'/front/assets/images/'+${item.pic}" th:alt="${item.name}" alt="product">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-8 col-sm-9">
+                        <div class="product-list-content mt-30">
+                            <h5 class="title">[[${item.name}]]</h5>
+                            <span th:text="'￥'+ ${item.price}">$15.00</span>
+                            <p th:text="'品牌:'+${item.brand}"></p>
+                            <a href="#" th:href="@{/commoditydetail(id=${item.getId()})}">加入到购物车</a>
+                            <a href="#">立即购买</a>
+                            <ul>
+                                <li><a href="#"><i class="ion ion-ios-heart-empty"></i></a></li>
+                                <li><a href="#"><i class="ion ion-ios-search"></i></a></li>
+                                <li><a href="#"><i class="ion ion-ios-repeat"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6" th:each="item : ${commodities.list}">
+                        <div class="single-product mt-30">
+                            <a href="#" th:href="@{/commoditydetail(id=${item.getId()})}">
+                            <img th:src="'/front/assets/images/'+${item.pic}" alt="product" th:alt="${item.name}">
+                                <h6 class="title" th:text="${item.name}">Grape</h6>
+                            </a>
+                            <ul>
+                                <li th:text="'￥'+${item.price}">$15.00</li>
+                            </ul>
+                        </div> <!-- single product -->
+                    </div>
+                </div> <!-- row -->
+            </div>
+        </div>
+    </div> <!-- container -->
+</section>
+
+<!--====== PRODUCT  PART ENDS ======-->
+
+<!--====== BLOG GRID PART START ======-->
+
+<div class="blog-list-area pt-30 pb-90">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="blog-list-item">
+                    <div class="pagination-area d-flex justify-content-between mt-60 pt-40">
+                        <div class="pagination-item-1">
+                            <div class="pagination-item-2">
+                                <ul>
+
+                                    <li>总共:[[${commodities.pages}]]页</li>
+                                    <!--显示首页-->
+                                    <!-- 首页 -->
+                                    <li>
+                                        <!--<a th:href="'/commodityListShowPage/'+${category_id}+'/'+0">首页</a>-->
+                                        <a th:href="@{/selectallShowPage}+'/'+1">首页</a>
+
+
+                                    </li>
+                                    <!-- 上一页 -->
+                                    <li class="pagination-item-2" th:if="${commodities.hasPreviousPage}">
+                                        <a th:href="'/selectallShowPage' +'/'+ ${commodities.prePage}">
+                                            <i class="ion ion-ios-arrow-back" ></i>
+                                        </a>
+                                    </li>
+                                    <!--构建导航条-->
+                                    <li  th:each="pageNum : ${commodities.navigatepageNums}">
+
+                                        <a th:href="'/selectallShowPage'+'/'+${pageNum}" th:text="${pageNum}" th:if="${pageNum ne commodities.pageNum and commodities.navigatePages < 9}" ></a>
+                                        <a th:href="'/selectallShowPage'+'/'+${pageNum}" th:text="${pageNum}" th:if="${pageNum eq commodities.pageNum}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+
+
+                                    </li>
+
+                                    <!-- 下一页 -->
+                                    <li class="pagination-item-2" th:if="${commodities.hasNextPage}">
+                                        <a th:href="'/selectallShowPage' +'/'+${commodities.nextPage}">
+                                            <i class="ion ion-ios-arrow-forward" ></i>
+                                        </a>
+                                    </li>
+
+                                    <!--显示尾页-->
+                                    <li>
+                                        <a th:href="'/selectallShowPage' +'/'+${commodities.pages}">尾页</a>
+                                    </li>
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--====== BLOG GRID PART ENDS ======-->
+
+    <!--====== FOOTER PART START ======-->
+
+    <section class="footer-area gray-bg pb-90" style="margin-top: 5vw">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-5">
+                    <div class="footer-item-1 mt-30">
+                        <a href="index.html"><img src="front/assets/images/logs.png" th:src="@{/front/assets/images/logs.png}" style="width: 16vw;height: 5vw;" alt="Logo"></a>
+                        <span>Copyright @2019 <span>loverblue</span></span>
+                        <ul>
+                            <li><a href="#">质量监督</a></li>
+                            <li><a href="#">消费者保护 </a></li>
+                            <li><a href="#">关于我们</a></li>
+                        </ul>
+                        <div class="footer-info">
+                            <ul>
+                                <li><i class="ion ion-md-pin"></i> 中国区 <br>河北省唐山市 </li>
+                                <li><i class="ion ion-ios-mail"></i>电子邮箱:u02@loverblue.cn</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-2 col-md-2 col-sm-4">
+                    <div class="footer-social mt-30">
+                        <h5 class="title">联系我们</h5>
+                        <ul>
+                            <li><a href="https://www.facebook.com/info.tanver">Facebook</a></li>
+                            <li><a href="#">QQ 147325197</a></li>
+                            <li><a href="#">微信：同号</a></li>
+                            <li><a href="skype:live:taherul.islam_1">Email:u02@loverblue.cn</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-8">
+                    <div class="footer-item-2 mt-30">
+                        <h5 class="title">电子邮箱</h5>
+                        <form action="#">
+                            <div class="input-box mt-25">
+                                <input type="text" placeholder="您的建议">
+                            </div>
+                            <!-- <div class="input-box mt-25">
+                                 <input type="email" placeholder="您的邮箱">
+                             </div>-->
+                            <div class="input-box mt-25">
+                                <button class="main-btn" id="main-btn">提交 <i class="ion ion-ios-send"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--====== FOOTER PART ENDS ======-->
+
+
+    <!--====== BACK TO TOP ======-->
+    <div class="back-to-top">
+        <a href="">
+            <i class="ion ion-md-arrow-up"></i>
+        </a>
+    </div>
+    <!--====== BACK TO TOP ======-->
+
+
+
+    <!--====== jquery js ======-->
+    <script th:src="@{/front/assets/js/vendor/modernizr-3.6.0.min.js}" src="front/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script th:src="@{/front/assets/js/vendor/jquery-1.12.4.min.js}" src="front/assets/js/vendor/jquery-1.12.4.min.js"></script>
+
+    <!--====== Bootstrap js ======-->
+    <script th:src="@{/front/assets/js/bootstrap.min.js}" src="front/assets/js/bootstrap.min.js"></script>
+    <script th:src="@{/front/assets/js/popper.min.js}" src="front/assets/js/popper.min.js"></script>
+
+    <!--====== Slick js ======-->
+    <script th:src="@{/front/assets/js/slick.min.js}" src="front/assets/js/slick.min.js"></script>
+
+    <!--====== Isotope js ======-->
+    <script th:src="@{/front/assets/js/isotope.pkgd.min.js}" src="front/assets/js/isotope.pkgd.min.js"></script>
+
+    <!--====== Images Loaded js ======-->
+    <script th:src="@{/front/assets/js/imagesloaded.pkgd.min.js}" src="front/assets/js/imagesloaded.pkgd.min.js"></script>
+
+    <!--====== Magnific Popup js ======-->
+    <script th:src="@{/front/assets/js/jquery.magnific-popup.min.js}" src="front/assets/js/jquery.magnific-popup.min.js"></script>
+
+    <!--====== Nice Select js ======-->
+    <script th:src="@{/front/assets/js/jquery.nice-select.min.js}" src="front/assets/js/jquery.nice-select.min.js"></script>
+
+    <!--====== Ajax Contact js ======-->
+    <script th:src="@{/front/assets/js/ajax-contact.js}" src="front/assets/js/ajax-contact.js"></script>
+
+    <!--====== Main js ======-->
+    <script th:src="@{/front/assets/js/main.js}" src="front/assets/js/main.js"></script>
+    <script th:src="@{/front/assets/js/ajax.js}" src="front/assets/js/ajax.js"></script>
+
+</body>
+
+</html>

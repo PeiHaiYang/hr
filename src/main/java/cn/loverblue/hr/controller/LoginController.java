@@ -37,25 +37,31 @@ public class LoginController {
         if (users!=null) {
             request.getSession().setAttribute("users", users);
          }
-        String emailflag= "/^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$/";
+
+
+
         Users userLogin = null;
-        if (users.getUsername()!=null&&"".equals(users.getPassword())){
 
-            if (RegexMatch.isLegalInputLine(users.getUsername())){
+        if (users.getUser_name()!=null){
 
-                users.setTel(users.getUsername());
+            if (RegexMatch.isLegalInputLine(users.getUser_name())){
 
-                users.setUsername(null);
+                users.setTel(users.getUser_name());
+
+                users.setUser_name(null);
 
                 userLogin = usersService.userLogin(users,request);
             }else{
-                List<String> str = RegexMatch.getString(users.getUsername(), emailflag);
+
+                List<String> str = RegexMatch.getString(users.getUser_name());
+
+                System.out.println(str.size());
 
                 System.out.println(str.toString());
 
-                users.setEmail(users.getUsername());
+                users.setEmail(users.getUser_name());
 
-                users.setUsername(null);
+                users.setUser_name(null);
 
                 userLogin = usersService.userLogin(users,request);
             }
@@ -104,7 +110,7 @@ public class LoginController {
 
           Map<String,String> results = new HashMap<>();
 
-          if(users.getUsername()!=null&&users.getPassword()!=null&&!"".equals(users.getPassword())){
+          if(users.getUser_name()!=null&&users.getPassword()!=null&&!"".equals(users.getPassword())){
 
               String code = (String) request.getSession().getAttribute("code");
 
@@ -123,11 +129,16 @@ public class LoginController {
                       results.put("msg","ok");
 
                       return results;
+                  }else{
+
+                      results.put("msg","用户名不存在或密码错误！");
+
+                      return results;
                   }
 
               }
           }
-          return results;
+          return null;
       }
 
 }

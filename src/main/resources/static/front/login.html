@@ -19,7 +19,7 @@
             <div class="icon">
                 <img src="image/cd-icon-username.png" alt="">
             </div>
-            <input type="text" name="username" placeholder="用户名/手机号/邮箱" autocomplete="off" value="">
+            <input type="text" name="user_name" placeholder="用户名/手机号/邮箱" autocomplete="off" value="">
         </div>
 
         <div class="login-pwd">
@@ -49,10 +49,11 @@
 
 <script src="./js/jquery-1.10.2.js"></script>
 <script src="./js/ban.js"></script>
-
+<!--====== Bootstrap js ======-->
+<script src="assets/js/bootstrap.min.js"></script>
 <script src="../js/md5.js"></script>
 <script src="../js/sha1.js"></script>
-
+<script src="../js/TCaptcha.js"></script>
 <script>
     $(function () {
         var btnval = $(".login-btn>input");
@@ -78,7 +79,7 @@
             let patternusername=/^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
             let pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
             let patternTel=/^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
-            let isNun= /^\\+?[1-9][0-9]*$/;
+
             //alert($(this).val());
 
             //如果是用户名则可以进行用户名验证的验证
@@ -152,14 +153,25 @@
 
         $(".login-pwd>input").blur(function () {
         if ($(".login-pwd>input").val()!=null && $(".login-pwd>input").val()!=''){
-                if ($(".login-pwd>input").length==6&&isNun.test($(".login-pwd>input").val())){
+            var isNum = /^\d{6}$/;
+                if (isNum.test(parseInt($(".login-pwd>input").val()))){
                     btnval.click(function () {
-                        testSms();
+                    var captcha1 = new TencentCaptcha('2019760731', function(res) {
+                        if(res.ret === 0){
+                            testSms();
+                        }
                     });
-                }else {
-                    $(".login-pwd>input").val(calcMD5(calcSHA1($(".login-pwd>input").val())));
+                    captcha1.show();
+                });
+                }else{
+                    $(".login-pwd>input").val(calcSHA1(calcMD5($(".login-pwd>input").val())));
                     btnval.click(function () {
-                        testSms();
+                        var captcha1 = new TencentCaptcha('2019760731', function(res) {
+                            if(res.ret === 0){
+                                testSms();
+                            }
+                        });
+                        captcha1.show();
                     });
                 }
 
@@ -176,7 +188,9 @@
                 success: function (results) {
                     console.log(results);
                     if (results.msg =="ok") {
-                        window.location.href = '../index.html';
+                        window.location.href = '/front';
+                    }else{
+                        alert(results.msg);
                     }
                 },
                 error: function(msg){

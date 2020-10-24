@@ -1,51 +1,40 @@
 package cn.loverblue.hr.bean;
 
+import java.util.Date;
 
-import java.sql.Date;
-
-/**
- * @author PHY
- * @date 2020-09-24$-21:13
- */
-
-/*@Component
-@ConfigurationProperties(prefix = "users")*/
 public class Users {
-    private int userId;
-    private String username;
+    private Integer user_id;
+
+    private String user_name;
+
     private String password;
+
     private String tel;
+
     private String email;
+
     private String sex;
-    private Date jointime;
+
+    private Date joinTime;
+
     private String picPath;
+
     private String state;
 
-    public String getState() {
-        return state;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public Users() {
+    public String getUser_name() {
+        return user_name;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name == null ? null : user_name.trim();
     }
 
     public String getPassword() {
@@ -53,7 +42,7 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
     public String getTel() {
@@ -61,7 +50,7 @@ public class Users {
     }
 
     public void setTel(String tel) {
-        this.tel = tel;
+        this.tel = tel == null ? null : tel.trim();
     }
 
     public String getEmail() {
@@ -69,7 +58,7 @@ public class Users {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
     public String getSex() {
@@ -77,15 +66,15 @@ public class Users {
     }
 
     public void setSex(String sex) {
-        this.sex = sex;
+        this.sex = sex == null ? null : sex.trim();
     }
 
-    public Date getJointime() {
-        return jointime;
+    public Date getJoinTime() {
+        return joinTime;
     }
 
-    public void setJointime(Date jointime) {
-        this.jointime = jointime;
+    public void setJoinTime(Date joinTime) {
+        this.joinTime = joinTime;
     }
 
     public String getPicPath() {
@@ -93,21 +82,14 @@ public class Users {
     }
 
     public void setPicPath(String picPath) {
-        this.picPath = picPath;
+        this.picPath = picPath == null ? null : picPath.trim();
     }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", tel='" + tel + '\'' +
-                ", email='" + email + '\'' +
-                ", sex='" + sex + '\'' +
-                ", jointime=" + jointime +
-                ", picPath='" + picPath + '\'' +
-                ", state='" + state + '\'' +
-                '}';
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
     }
 }

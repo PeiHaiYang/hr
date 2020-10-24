@@ -13,8 +13,6 @@
             height: 900px;
             width: 100%;
             font-family: sans-serif;
-
-
             background-image: url(../img/login.gif);
             background-repeat: no-repeat;
             background-size: cover;
@@ -78,7 +76,7 @@
             font-size: 14px;
         }
 
-        .box input[type="submit"] {
+        .box input[type="button"] {
             background: transparent;
             border: none;
             outline: none;
@@ -109,16 +107,16 @@
 <body>
 <div class="box">
     <h1>Login</h1>
-    <form class="" action="" id="MyForm">
+    <form id="MyForm">
         <div class="inputBox">
 
-            <input type="text" class="userName" value="123" name="userName" id="userName" required="required">
+            <input type="text" class="userName" value="" name="user_name" id="userName" required="required">
 
             <label>userName/Tel/Email</label>
         </div>
         <div class="inputBox">
 
-            <input type="password" value="123" class="password" id="password" name="password" required="required">
+            <input type="password" value="" class="password" id="password" name="password" required="required">
 
             <label>passWord</label>
 
@@ -126,12 +124,9 @@
 
         <div class="inputBox">
 
-            <input type="submit" id="" value="submit"/>
+            <input type="button" id="btn" value="submit"/>
 
         </div>
-
-        <!--  <div class="box_bottom"></div>-->
-
 
     </form>
 
@@ -146,19 +141,38 @@
 <script>
     $(function () {
         var myForm = document.getElementById("MyForm");
+
         var formdate = new FormData(myForm);
-        submit();
-        function submit() {
-            let pws = formdate.get("password");
+
+        $("#btn").click(function(){
+            let pws =  $("#password").val();
 
             /*加盐的md5加密 */
-            var password = calcSHA1(calcMD5(pws));
-
-            var p = $("#MyForm").serialize();
-            console.log(p);
+            $("#password").val(calcSHA1(calcMD5(pws)));
+            console.log(calcSHA1(calcMD5(pws)))
             var s= serializeObject($("#MyForm"));
-            console.log(s);
-        }
+
+            $.ajax({
+                url: '/userLogin',
+                type: 'post',
+                dataType: 'json',
+                data: s,
+                success: function (results) {
+                    console.log(results);
+                    if (results.msg =="ok") {
+                        window.location.href = '../index.html';
+                    }else {
+                        alert(results.msg);
+                    }
+                },
+                error: function(msg){
+                    alert('请检查您的网路');
+                    return false;
+
+                }
+            })
+            return false;
+        });
 
         function serializeObject(obj) {
             var resultes = {};
@@ -170,9 +184,7 @@
             //返回一个对象
             return resultes;
         }
-        /* $.ajax({
-             url :'t1'
-         })*/
+
 
     })
 </script>

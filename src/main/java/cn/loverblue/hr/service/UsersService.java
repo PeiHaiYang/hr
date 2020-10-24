@@ -1,6 +1,7 @@
 package cn.loverblue.hr.service;
 
 import cn.loverblue.hr.bean.Users;
+import cn.loverblue.hr.bean.UsersExample;
 import cn.loverblue.hr.repository.UsersMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -34,7 +36,7 @@ public class UsersService {
     */
     public Users checkUsername(String username){
         Map<String, String> map = new HashMap<String, String>();
-        map.put("username",username);
+        map.put("user_name",username);
         return usersMapper.check(map);
     }
 
@@ -62,7 +64,7 @@ public class UsersService {
 
         if(Ddusers!=null){
 
-           logger.info("登录用户为"+Ddusers.getUserId());
+           logger.info("登录用户为"+Ddusers.getUser_id());
 
            request.getSession().removeAttribute("users");
 
@@ -75,6 +77,8 @@ public class UsersService {
    }
 
 
-
-
+    public List<Users> select() {
+        UsersExample usersExample =new UsersExample();
+        return usersMapper.selectByExample(usersExample);
+    }
 }
